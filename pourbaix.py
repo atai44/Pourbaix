@@ -29,6 +29,8 @@ GPb2O3 = -409.660823950954
 GPb3O4 = -606.321927722997
 PbCO3 = -636.8927823795264
 hc = -1990.5166151753715
+pbphos = -2265.1179660491134
+P = -553.825665
 
 title_ = 'PBESol spin (low lead conc)'
 
@@ -49,14 +51,14 @@ title_ = 'PBESol spin (low lead conc)'
 # title_ = 'PBE with log C = 0'
 
 #Experimental (no Pb2O3 data)
-GPb = 0
-GPbO = -187.9
-GPb2O3 = 10000
-GPb3O4 = -601.2
-GPbO2 = -217.4
-PbCO3 = -626.3
-hc = -1709.582 #REMEMBER THIS HAS 3 LEAD ATOMS
-title_ = 'Experimental (low lead conc)'
+# GPb = 0
+# GPbO = -187.9
+# GPb2O3 = 10000
+# GPb3O4 = -601.2
+# GPbO2 = -217.4
+# PbCO3 = -626.3
+# hc = -1709.582 #REMEMBER THIS HAS 3 LEAD ATOMS
+# title_ = 'Experimental (low lead conc)'
 
 GPb4 = 302.50074
 GPb2 = -23.9743
@@ -67,6 +69,7 @@ GPbH2 = 290.788
 OH = -157.33514
 
 conc = 1.5*10**(-8)
+conc = 1
 Cconc = 10**(-5)
 
 pHstart = -2
@@ -194,6 +197,13 @@ for pH in pHvec:
         #     lowpot = urxn
         #     stable = 10
             
+        #ortho
+        pconc = 0.0000001
+        urxn = (pbphos + 16*uH + 16*ue - 8*uH2O - 2*(P+R*T*math.log(pconc)))/3
+        if (urxn <= lowpot): 
+            lowpot = urxn
+            stable = 11
+            
         # #PbO4----
         # pot = GPbO4 + R*T*math.log(conc)
         # urxn = pot + 8*uH + 4*ue - 4*uH2O - uPb
@@ -217,8 +227,8 @@ for pH in pHvec:
     
     
 fig, ax = plt.subplots()
-levels = [-1, 0, 1, 2, 4, 5, 6, 7, 8, 9, 10]
-colors_ = ['#85807b', '#db653d', '#e04a16', '#3ec760', '#2a8744', '#c92840', '#db7d42', '#bf3939', '#191cf7', '#d142f5']
+levels = [-1, 0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11]
+colors_ = ['#85807b', '#db653d', '#e04a16', '#3ec760', '#2a8744', '#c92840', '#db7d42', '#bf3939', '#191cf7', '#d142f5', '#007BA7']
 CS = ax.contourf(pH_,V_,Z, levels, colors=colors_)
 # CS = ax.pcolormesh(pH_, V_, Z)
 ax.contour(pH_, V_, Z, colors= 'k', linewidths=0.25, antialiased=True)
