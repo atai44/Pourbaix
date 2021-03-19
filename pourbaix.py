@@ -30,7 +30,7 @@ GPb3O4 = -606.321927722997
 PbCO3 = -636.8927823795264
 hc = -1990.5166151753715
 pbphos = -2265.1179660491134
-P = -553.825665
+#P = -553.825665
 
 title_ = 'PBESol spin (low lead conc)'
 
@@ -199,7 +199,25 @@ for pH in pHvec:
             
         #ortho
         pconc = 0.0000001
-        urxn = (pbphos + 16*uH + 16*ue - 8*uH2O - 2*(P+R*T*math.log(pconc)))/3
+        
+        h3po4 = -1147.2 + R*T*math.log(pconc)
+        h2po4 = -1135.119 + R*T*math.log(pconc)
+        hpo4 = -1094.116 + R*T*math.log(pconc)
+        po4 = -1025.498 + R*T*math.log(pconc)
+        
+        border1 = 2.03
+        border2 = 7.19
+        border3 = 12.03
+        
+        if (pH<border1):
+            urxn = (pbphos + 6*uH + 6*ue - 2*h3po4)/3
+        elif (pH<border2):
+            urxn = (pbphos + 4*uH + 4*ue - 2*h2po4)/3
+        elif (pH<border3):
+            urxn = (pbphos + 2*uH + 2*ue - 2*hpo4)/3
+        else:
+            urxn = (pbphos - 2*po4)/3
+    
         if (urxn <= lowpot): 
             lowpot = urxn
             stable = 11
