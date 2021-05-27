@@ -1,1 +1,1 @@
-# Generate Pourbaix diagrams with different sets of free energies
+# Out of date, please see https://github.com/atai44/LeadProject
